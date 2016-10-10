@@ -12,7 +12,7 @@
 ## 安装
 
     $ npm install passport-wechat
-    
+
 ## 使用
 #### Configure  Strategy
 
@@ -25,12 +25,18 @@
         client:{wechat|web},
         callbackURL: {CALLBACKURL},
         scope: {snsapi_userinfo|snsapi_base},
-        state:{STATE}
+        state:{STATE},
+        getToken: {getToken},
+        saveToken: {saveToken}
       },
-      function(accessToken, refreshToken, profile, done) {
+      function(accessToken, refreshToken, profile,expires_in, done) {
         return done(err,profile);
       }
 ));
+
+The `callbackURL`, `scope` and `state` can be overwritten in `passport.authenticate` middleware.
+
+The `getToken` and `saveToken` can be provided to initialize Wechat OAuth instance.
 
 ```
 
@@ -42,6 +48,9 @@
 `options` - Optional. Can include the following:
 * `state` - Override state for this specific API call
 * `callbackURL` - Override callbackURL for this specific API call
+* `scope` - Override scope for this specific API call
+
+If no callbackURL is specified, the same request url will be used.
 
 #### Authentication Callback
 
